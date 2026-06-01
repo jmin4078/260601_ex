@@ -18,6 +18,9 @@
         //https://mockapi.io
         const form = document.querySelector("#user register"); //DOM
         form.addEventListener("submit", (event) => {event.preventDefault();
+        const formData = new FormData(event.target);
+        console.log(...formData);
+        
         console.log("제출");
     });
 
