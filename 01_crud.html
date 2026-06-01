@@ -26,7 +26,8 @@
       form.addEventListener("submit", formHandler);
 
       // Event Handler (호이스팅 허용 - 함수 선언식)
-      function formHandler(event) {
+      // function formHandler(event) {
+      async function formHandler(event) { // 내부 await 쓰려고 하면
         event.preventDefault(); // 기본 폼 제출 비활성화
         // 1. form - 변수 -> Form DOM => 이걸 넣어도 FormData 작동
         // 2. event -> event.target (lexical scope 고려)
@@ -38,7 +39,9 @@
         // https://mockapi.io/
         // 1. 경로 2. Promise
         // getData()
-        createData(formData.get("pokeName"));
+        // createData(formData.get("pokeName"));
+        // Uncaught SyntaxError: await is only valid in async functions and the top level bodies of modules (at 01_crud.html?pokeName=:42:9)
+        await createData(formData.get("pokeName"));
         console.log("제출");
         // setTimeout(() => {
         //   console.log(response);
@@ -47,7 +50,9 @@
 
       // fetch
 
-      function createData(name) {
+      // function createData(name) {
+      async function createData(name) {
+        // await 사용 가능, return -> promise.
         // 스코프 차이로 인해서 매개변수로 전달 받아야함
         const apiURL = "https://6a1ce1db8858a003817c2312.mockapi.io/pokemon";
         // 1. form data로 할 경우
@@ -56,7 +61,7 @@
         // 2. JSON 으로 전달
         const payload = { name }; // 단축 -> 변수명으로 바로 넣으면 그 키를 가지는 프로퍼티화 시켜줌
         console.log(payload);
-        const response = fetch(apiURL, {
+        const response = await fetch(apiURL, {
           method: "POST", // 데이터 생성
           // payload (페이로드를 body에 담는다)
           //   body: formData,
@@ -69,10 +74,13 @@
           // .then(console.log); // 응답 객체
           //   .then((resp) => resp.text()) // 응답 body에 있는 데이터를 텍스트화
           //   .then((text) => console.log(text));
-          .then((resp) => resp.json())
-          // console.log 대신에 dom 조작하는 함수가 들어가면?
-          .then((json) => console.log(json));
-        console.log(response); // Promise {<pending>}
+          .then((resp) => resp.json());
+        // console.log 대신에 dom 조작하는 함수가 들어가면?
+        //   .then((json) => console.log(json))
+        //   .then(() => console.log("제출 완료"));
+        // console.log(response); // Promise {<pending>}
+        // response undefined -> 이러고 싶지 않으면 -> json이나 text 같은 '결과'를 가져오는 데서 멈춰야함
+        console.log("response", response); // 제출 완료 다음에 나옴
       }
 
       function getData() {
