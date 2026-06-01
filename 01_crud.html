@@ -77,7 +77,7 @@
       async function createData(name) {
         // await 사용 가능, return -> promise.
         // 스코프 차이로 인해서 매개변수로 전달 받아야함
-        const apiURL = "https://6a1ce1e38858a003817c233f.mockapi.io/pokemon";
+        const apiURL = "https://6a1ce1db8858a003817c2312.mockapi.io/pokemon";
         // 1. form data로 할 경우
         // const formData = new FormData();
         // formData.append("name", name);
@@ -116,7 +116,7 @@
 
       //   function getData() {
       async function getData() {
-        const apiURL = "https://6a1ce1e38858a003817c233f.mockapi.io/pokemon";
+        const apiURL = "https://6a1ce1db8858a003817c2312.mockapi.io/pokemon";
 
         const response = await axios.get(apiURL);
         console.log("response.data", response.data);
