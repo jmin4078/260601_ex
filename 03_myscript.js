@@ -291,15 +291,114 @@ function closeModal() {
 function triggerRankEffect(rarity) {
   if (rarity === "normal") return;
 
-  // 배너
   showBanner(rarity);
 
-  if (rarity === "rare")      spawnParticles(30, "star",     ["#3b82f6","#93c5fd","#dbeafe"]);
-  if (rarity === "epic")      spawnParticles(60, "star",     ["#a855f7","#d8b4fe","#e879f9","#fff"]);
+  const cx = fxCanvas.width / 2;
+  const cy = fxCanvas.height / 2;
+
+  if (rarity === "rare") {
+    spawnBurst(cx, cy, 70, "star", [
+      "#3b82f6",
+      "#60a5fa",
+      "#93c5fd",
+      "#dbeafe",
+      "#ffffff",
+    ]);
+  }
+
+  if (rarity === "epic") {
+    spawnSpiral(cx, cy, 120, [
+      "#7e22ce",
+      "#a855f7",
+      "#c084fc",
+      "#e879f9",
+      "#ffffff",
+    ]);
+
+    spawnBurst(cx, cy, 60, "star", [
+      "#a855f7",
+      "#d8b4fe",
+      "#ffffff",
+    ]);
+  }
+
   if (rarity === "legendary") {
     flashScreen();
-    spawnParticles(120, "confetti", ["#f59e0b","#fcd34d","#fef3c7","#ef4444","#ec4899","#fff"]);
+
+    spawnBurst(cx, cy, 160, "star", [
+      "#f59e0b",
+      "#fbbf24",
+      "#fde68a",
+      "#ffffff",
+    ]);
+
+    spawnParticles(
+      140,
+      "confetti",
+      ["#f59e0b", "#fcd34d", "#fff7cc", "#ffffff"]
+    );
+    
   }
+}
+function spawnBurst(x, y, count, type, colors) {
+  for (let i = 0; i < count; i++) {
+    const angle = (Math.PI * 2 * i) / count;
+    const speed = 4 + Math.random() * 10;
+
+    particles.push({
+      type,
+      x,
+      y,
+
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 12,
+
+      size:
+        type === "confetti"
+          ? 8 + Math.random() * 8
+          : 6 + Math.random() * 10,
+
+      color:
+        colors[Math.floor(Math.random() * colors.length)],
+
+      alpha: 1,
+      life: 1,
+    });
+  }
+
+  if (!animRunning) requestAnimationFrame(animLoop);
+}
+function spawnSpiral(x, y, count, colors) {
+  for (let i = 0; i < count; i++) {
+    const angle = i * 0.35;
+    const radius = i * 2.5;
+
+    particles.push({
+      type: "star",
+
+      x: x + Math.cos(angle) * radius,
+      y: y + Math.sin(angle) * radius,
+
+      vx: Math.cos(angle) * 2,
+      vy: Math.sin(angle) * 2,
+
+      rotation: Math.random() * 360,
+      rotSpeed: (Math.random() - 0.5) * 8,
+
+      size: 4 + Math.random() * 6,
+
+      color:
+        colors[Math.floor(Math.random() * colors.length)],
+
+      alpha: 1,
+      life: 1,
+    });
+  }
+
+  if (!animRunning) requestAnimationFrame(animLoop);
 }
 
 function showBanner(rarity) {
