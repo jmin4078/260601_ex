@@ -22,8 +22,12 @@ function drawPoke(data) {
   console.log("drawPoke");
   console.log("result", result);
   result.innerHTML = `
-    <div>
-        <img src="${data.sprites.front_default}"
+    <div style="text-align: center;">
+        <img src="${data.sprites.front_default}" />
+        <h4>${data.koName}</h4>
+        <p>도감번호 : ${data.id}</p>
+        <p>영문이름 : ${data.name}</p>
+        <audio src="${data.cries.latest}" controls></audio>
     </div>
   `;
 }
@@ -50,5 +54,12 @@ async function getPokeData(search) {
   console.log("response", response);
   const data = response.data;
   console.log("data", data);
+  const response2 = await axios.get(data.species.url);
+  console.log("response2", response2);
+  const koName = response2.data.names.find(
+    (item) => item.language.name === "ko",
+  ).name; // 일종의 .filter 응용 메서드 -> 첫번째 찾으면 그걸 return. 없으면 null
+  console.log(koName);
+  data.koName = koName;
   return data;
 }
