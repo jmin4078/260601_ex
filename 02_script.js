@@ -15,6 +15,17 @@ async function searchFormHandler(event) {
   console.log("search", search);
   const pokeData = await getPokeData(search);
   console.log("pokeData", pokeData);
+  drawPoke(pokeData);
+}
+
+function drawPoke(data) {
+  console.log("drawPoke");
+  console.log("result", result);
+  result.innerHTML = `
+    <div>
+        <img src="${data.sprites.front_default}"
+    </div>
+  `;
 }
 
 function getFormData(event) {
