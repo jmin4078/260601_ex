@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>포켓몬 가챠</title>
+    <link rel="stylesheet" href="03_mystyle.css" />
+  </head>
+  <body>
+
+    <!-- 파티클 캔버스 (전체 화면, 연출용) -->
+    <canvas id="fxCanvas"></canvas>
+
+    <!-- 등급 알림 배너 -->
+    <div class="rank-banner hidden" id="rankBanner">
+      <span id="rankBannerText"></span>
+    </div>
+
+    <div class="container">
+      <header>
+        <h1>포켓몬 가챠</h1>
+        <p class="subtitle">어떤 포켓몬이 나올까?</p>
+      </header>
+
+      <div class="gacha-box" id="gachaBox">
+        <div class="pokeball-wrap" id="pokeballWrap">
+          <div class="pokeball" id="pokeball">
+            <div class="pokeball-top"></div>
+            <div class="pokeball-mid"></div>
+            <div class="pokeball-bot"></div>
+            <div class="pokeball-btn"></div>
+          </div>
+        </div>
+
+        <div class="result-card hidden" id="resultCard">
+          <div class="rank-badge" id="rankBadge"></div>
+          <div class="type-badges" id="typeBadges"></div>
+          <img id="pokeImg" src="" alt="" />
+          <h2 id="pokeName"></h2>
+          <p id="pokeInfo"></p>
+          <div class="stats" id="pokeStats"></div>
+          <audio id="pokeCry" controls></audio>
+        </div>
+      </div>
+
+      <button class="gacha-btn" id="gachaBtn">
+        <span id="btnText">뽑기!</span>
+      </button>
+
+      <div class="history" id="history">
+        <h3>뽑기 기록 <span id="historyCount"></span></h3>
+        <div class="history-list" id="historyList">
+          <p class="empty-msg">아직 뽑은 포켓몬이 없어요</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 상세 모달 -->
+    <div class="modal-overlay hidden" id="modalOverlay">
+      <div class="modal" id="modal">
+        <button class="modal-close" id="modalClose">✕</button>
+        <div class="rank-badge" id="modalRankBadge"></div>
+        <div class="type-badges" id="modalTypeBadges"></div>
+        <img id="modalImg" src="" alt="" />
+        <h2 id="modalName"></h2>
+        <p id="modalInfo"></p>
+        <div class="stats" id="modalStats"></div>
+        <audio id="modalCry" controls></audio>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="03_myscript.js"></script>
+  </body>
+</html>
